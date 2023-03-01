@@ -1,5 +1,6 @@
 package com.devsuperior.movieflix.services;
 
+import com.devsuperior.movieflix.dto.GenreDTO;
 import com.devsuperior.movieflix.dto.MovieDTO;
 import com.devsuperior.movieflix.entities.Movie;
 import com.devsuperior.movieflix.repositories.MovieRepository;
@@ -23,10 +24,10 @@ public class MovieService {
         return movies.stream().map(x -> new MovieDTO(x)).collect(Collectors.toList());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public MovieDTO findById(Long id) {
         Optional<Movie> movieOptional = movieRepository.findById(id);
         Movie movie = movieOptional.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-        return new MovieDTO(movie);
+        return new MovieDTO(movie, new GenreDTO(movie.getGenre()));
     }
 }
