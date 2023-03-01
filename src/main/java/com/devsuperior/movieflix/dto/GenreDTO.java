@@ -7,7 +7,7 @@ public class GenreDTO {
     private Long id;
     private String name;
 
-    public GenreDTO() {}
+    public GenreDTO() { }
 
     public GenreDTO(Long id, String name) {
         this.id = id;
