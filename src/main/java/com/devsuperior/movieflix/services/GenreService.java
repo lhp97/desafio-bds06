@@ -5,9 +5,11 @@ import com.devsuperior.movieflix.entities.Genre;
 import com.devsuperior.movieflix.repositories.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GenreService {
@@ -16,8 +18,8 @@ public class GenreService {
     private GenreRepository genreRepository;
 
     @Transactional
-    public Page<GenreDTO> findAllPaged(Pageable pageable) {
-        Page<Genre> genres = genreRepository.findAll(pageable);
-        return genres.map(genre -> new GenreDTO(genre));
+    public List<GenreDTO> findAllGenres() {
+        List<Genre> genres = genreRepository.findAll();
+        return genres.stream().map(genre -> new GenreDTO(genre)).collect(Collectors.toList());
     }
 }
