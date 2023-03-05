@@ -43,7 +43,8 @@ public class MovieService {
 
     @Transactional
     public Page<MovieGenreDTO> findMoviesByGenre(Long genreId, Pageable pageable) {
-        Page<Movie> movie = movieRepository.findMovieByGenre(genreId, pageable);
+        Long genreIdFinal = genreId == 0 ? null : genreId;
+        Page<Movie> movie = movieRepository.findMovieByGenre(genreIdFinal, pageable);
         return movie.map(x -> new MovieGenreDTO(x));
     }
 }
